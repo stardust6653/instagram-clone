@@ -14,10 +14,10 @@ type Props = {
 const PostListCard = ({ post }: Props) => {
   const { userImage, username, image, createdAt, likes, text } = post;
   return (
-    <>
-      <div>
-        <Avatar image={userImage} highlight />
-        <span>{username}</span>
+    <article className="rounded-lg shadow-md border border-e-gray-200">
+      <div className="flex items-center p-2">
+        <Avatar image={userImage} size="medium" highlight />
+        <span className="text-gray-900 font-bold ml-2">{username}</span>
       </div>
       <Image
         src={image}
@@ -42,7 +42,7 @@ const PostListCard = ({ post }: Props) => {
           <button>post</button>
         </form>
       </div>
-    </>
+    </article>
   );
 };
 
