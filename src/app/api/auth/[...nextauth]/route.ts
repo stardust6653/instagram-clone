@@ -2,7 +2,7 @@ import { addUser } from "@/service/user";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions: NextAuthOptions = NextAuth({
+export const OPTIONS: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_OAUTH_ID || "",
@@ -23,6 +23,7 @@ export const authOptions: NextAuthOptions = NextAuth({
       });
       return true;
     },
+
     async session({ session }) {
       const user = session?.user;
       if (user) {
@@ -37,6 +38,8 @@ export const authOptions: NextAuthOptions = NextAuth({
   pages: {
     signIn: "/auth/signin",
   },
-});
+};
+
+export const authOptions: NextAuthOptions = NextAuth(OPTIONS);
 
 export { authOptions as GET, authOptions as POST };
