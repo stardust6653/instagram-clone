@@ -1,47 +1,54 @@
+"use client";
+
 import { SimplePost } from "@/model/post";
-import React from "react";
+import React, { useState } from "react";
 import Avatar from "./Avatar";
 import Image from "next/image";
-import HeartIcon from "./ui/icons/HeartIcon";
-import BookmarkIcon from "./ui/icons/BookmarkIcon";
-import { parseDate } from "@/util/date";
-import SmileIcon from "./ui/icons/SmileIcon";
+import CommentForm from "./CommentForm";
+import ActionBar from "./ActionBar";
+import ModalPortal from "./ModalPortal";
+import PostModal from "./PostModal";
+import PostDetail from "./PostDetail";
+import PostUserAvatar from "./PostUserAvatar";
 
 type Props = {
   post: SimplePost;
+  priority?: boolean;
 };
 
-const PostListCard = ({ post }: Props) => {
+const PostListCard = ({ post, priority = false }: Props) => {
   const { userImage, username, image, createdAt, likes, text } = post;
+  const [openModal, setOpenModal] = useState(false);
+
   return (
     <article className="rounded-lg shadow-md border border-e-gray-200">
-      <div className="flex items-center p-2">
-        <Avatar image={userImage} size="medium" highlight />
-        <span className="text-gray-900 font-bold ml-2">{username}</span>
-      </div>
+      <PostUserAvatar image={userImage} username={username} />
       <Image
-        src={image}
-        alt={`photo by ${username}`}
+        className="w-full object-cover aspect-square"
         width={500}
         height={500}
+        src={image}
+        alt={`photo by ${username}`}
+        // 사용자가 가장 먼저 보는 이미지를 설정 (우선 렌더링)
+        priority={priority}
+        onClick={() => {
+          setOpenModal(true);
+        }}
       />
-      <div>
-        <HeartIcon />
-        <BookmarkIcon />
-      </div>
-      <div>
-        <p>{`${likes?.length ?? 0} ${likes?.length > 1 ? "likes" : "like"}`}</p>
-        <p>
-          <span>{username}</span>
-          {text}
-        </p>
-        <p>{parseDate(createdAt)}</p>
-        <form>
-          <SmileIcon />
-          <input type="text" placeholder="Add a comment..." />
-          <button>post</button>
-        </form>
-      </div>
+      <ActionBar
+        likes={likes}
+        username={username}
+        text={text}
+        createdAt={createdAt}
+      />
+      <CommentForm />
+      {openModal && (
+        <ModalPortal>
+          <PostModal onClose={() => setOpenModal(false)}>
+            <PostDetail post={post} />
+          </PostModal>
+        </ModalPortal>
+      )}
     </article>
   );
 };
