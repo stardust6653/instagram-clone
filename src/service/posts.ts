@@ -79,6 +79,44 @@ export const getSavedPostOf = (username: string) => {
 const mapPosts = (posts: SimplePost[]) => {
   return posts.map((post: SimplePost) => ({
     ...post,
+    likes: post.likes ?? [],
     image: urlFor(post.image),
   }));
+};
+
+export const likePost = async (postId: string, userId: string) => {
+  return client
+    .patch(postId)
+    .setIfMissing({ likes: [] })
+    .append("likes", [
+      {
+        _ref: userId,
+        _type: "reference",
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
+};
+
+export const disLikePost = async (postId: string, userId: string) => {
+  return client
+    .patch(postId)
+    .unset([`likes[_ref=="${userId}"]`])
+    .commit();
+};
+
+export const addComment = async (
+  postId: string,
+  userId: string,
+  comment: string
+) => {
+  return client
+    .patch(postId)
+    .setIfMissing({ comments: [] })
+    .append("comments", [
+      {
+        comment,
+        author: { _ref: userId, _type: "reference" },
+      },
+    ])
+    .commit({ autoGenerateArrayKeys: true });
 };
