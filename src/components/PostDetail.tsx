@@ -14,6 +14,7 @@ const PostDetail = ({ post }: Props) => {
   const { id, userImage, username, image } = post;
   const { post: data, postComment } = useFullPosts(id);
   const comments = data?.comments;
+
   return (
     <section className="flex w-full h-full">
       <div className="relative basis-3/5">

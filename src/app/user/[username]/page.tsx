@@ -12,6 +12,7 @@ type Props = {
 const getUser = cache(async (username: string) => getUserForProfile(username));
 
 const UserPage = async ({ params: { username } }: Props) => {
+  // 캐시
   const user = await getUser(username);
 
   if (!user) {
@@ -30,6 +31,7 @@ export default UserPage;
 export const generateMetadata = async ({
   params: { username },
 }: Props): Promise<Metadata> => {
+  // 캐시
   const user = await getUser(username);
   return {
     title: `${user?.name} (@${user?.username})﹒Instagram Photos`,

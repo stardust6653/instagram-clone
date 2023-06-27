@@ -8,7 +8,7 @@ import ToggleButton from "./ui/ToggleButton";
 import HeartFillIcon from "./ui/icons/HeartFillIcon";
 import BookmarkFillIcon from "./ui/icons/BookmarkFillIcon";
 import { Comment, SimplePost } from "@/model/post";
-import { usePosts } from "@/hooks/posts";
+import usePosts from "@/hooks/posts";
 import { useMe } from "@/hooks/me";
 import CommentForm from "./CommentForm";
 
@@ -37,7 +37,6 @@ const ActionBar = ({ post, children, onComment }: Props) => {
   const handleComment = (comment: string) => {
     user && onComment({ comment, username: user.username, image: user.image });
   };
-
   return (
     <>
       <div className="flex justify-between my-2 px-4">
@@ -59,7 +58,7 @@ const ActionBar = ({ post, children, onComment }: Props) => {
           likes?.length > 1 ? "likes" : "like"
         }`}</p>
         {children}
-        <p className="text-xs text-neutral-500 uppercase my-4">
+        <p className="text-xs text-neutral-500 uppercase my-2">
           {parseDate(createdAt)}
         </p>
       </div>

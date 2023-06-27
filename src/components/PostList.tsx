@@ -6,7 +6,7 @@ import React from "react";
 
 import PostListCard from "./PostListCard";
 import GridSpinner from "./GridSpinner";
-import { usePosts } from "@/hooks/posts";
+import usePosts from "@/hooks/posts";
 
 const PostList = () => {
   const { posts, isLoading: loading } = usePosts();

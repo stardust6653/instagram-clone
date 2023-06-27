@@ -14,8 +14,8 @@ type Props = {
 };
 
 const PostGridCard = ({ post, priority = false }: Props) => {
-  const { image, username } = post;
   const [openModal, setOpenModal] = useState(false);
+  const { image, username } = post;
   const { data: session } = useSession();
   const handleOpenPost = () => {
     if (!session?.user) {
@@ -23,9 +23,8 @@ const PostGridCard = ({ post, priority = false }: Props) => {
     }
     setOpenModal(true);
   };
-
   return (
-    <div className="relative w-full aspect-square cursor-pointer">
+    <div className="relative w-full aspect-square">
       <Image
         className="object-cover"
         src={image}

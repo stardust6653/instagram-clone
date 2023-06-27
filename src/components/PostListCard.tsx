@@ -8,7 +8,7 @@ import ModalPortal from "./ModalPortal";
 import PostModal from "./PostModal";
 import PostDetail from "./PostDetail";
 import PostUserAvatar from "./PostUserAvatar";
-import { usePosts } from "@/hooks/posts";
+import usePosts from "@/hooks/posts";
 
 type Props = {
   post: SimplePost;
